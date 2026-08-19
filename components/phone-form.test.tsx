@@ -3,12 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PhoneForm } from "./phone-form";
 
+const firstRequestId = "550e8400-e29b-41d4-a716-446655440010";
+const secondRequestId = "550e8400-e29b-41d4-a716-446655440011";
+
 afterEach(cleanup);
 
 describe("PhoneForm", () => {
   beforeEach(() => {
     vi.unstubAllEnvs();
     vi.stubEnv("NEXT_PUBLIC_DIBS_API_URL", "https://api.example.test");
+    vi.stubGlobal("crypto", { randomUUID: vi.fn(() => firstRequestId) });
   });
 
   it("renders the phone field, supporting copy, and submit action", () => {
@@ -28,7 +32,12 @@ describe("PhoneForm", () => {
     expect(screen.getByRole("button", { name: "Text me!" })).toHaveTextContent("Text me!");
   });
 
-  it("preserves an international number and shows accepted copy only after API acceptance", async () => {
+  it.each([
+    "+919769760891",
+    "+14155552671",
+    "+447911123456",
+    "+971501234567",
+  ])("accepts and preserves the canonical international number %s", async phone => {
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ accepted: true }), { status: 200 }),
     );
@@ -37,8 +46,8 @@ describe("PhoneForm", () => {
     render(<PhoneForm id="test-phone" />);
 
     const input = screen.getByLabelText("Phone number");
-    fireEvent.change(input, { target: { value: "+919769760891" } });
-    expect(input).toHaveValue("+919769760891");
+    fireEvent.change(input, { target: { value: phone } });
+    expect(input).toHaveValue(phone);
     await user.click(screen.getByRole("button", { name: "Text me!" }));
 
     expect(await screen.findByText("you’re in.")).toBeInTheDocument();
@@ -46,7 +55,7 @@ describe("PhoneForm", () => {
     expect(fetchMock).toHaveBeenCalledWith(
       "https://api.example.test/api/onboarding",
       expect.objectContaining({
-        body: JSON.stringify({ phone: "+919769760891", source: "website" }),
+        body: JSON.stringify({ phone, source: "website", requestId: firstRequestId }),
       }),
     );
   });
@@ -88,12 +97,12 @@ describe("PhoneForm", () => {
     expect(fetchMock).toHaveBeenCalledWith(
       "https://api.example.test/api/onboarding",
       expect.objectContaining({
-        body: JSON.stringify({ phone: "+13055550123", source: "website" }),
+        body: JSON.stringify({ phone: "+13055550123", source: "website", requestId: firstRequestId }),
       }),
     );
   });
 
-  it.each(["", "not-a-phone", "++447911123456"])(
+  it.each(["", "+123", "not-a-phone", "++447911123456"])(
     "rejects malformed input without calling the API: %#",
     async phone => {
       const fetchMock = vi.fn();
@@ -140,5 +149,43 @@ describe("PhoneForm", () => {
 
     expect(await screen.findByText("something went wrong. try again.")).toBeInTheDocument();
     expect(screen.queryByText("private backend detail")).not.toBeInTheDocument();
+  });
+
+  it("reuses requestId after an ambiguous network failure", async () => {
+    const fetchMock = vi.fn()
+      .mockRejectedValueOnce(new TypeError("network failed"))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ accepted: true }), { status: 202 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const user = userEvent.setup();
+    render(<PhoneForm id="test-phone" />);
+
+    await user.type(screen.getByLabelText("Phone number"), "3055550123");
+    await user.click(screen.getByRole("button", { name: "Text me!" }));
+    await screen.findByText("something went wrong. try again.");
+    await user.click(screen.getByRole("button", { name: "Text me!" }));
+    await screen.findByText("you’re in.");
+
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toMatchObject({ requestId: firstRequestId });
+    expect(JSON.parse(fetchMock.mock.calls[1][1].body)).toMatchObject({ requestId: firstRequestId });
+  });
+
+  it("uses a fresh requestId after a definitive HTTP rejection", async () => {
+    const randomUUID = vi.fn().mockReturnValueOnce(firstRequestId).mockReturnValueOnce(secondRequestId);
+    vi.stubGlobal("crypto", { randomUUID });
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ error: "Invalid onboarding request." }), { status: 400 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ accepted: true }), { status: 202 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const user = userEvent.setup();
+    render(<PhoneForm id="test-phone" />);
+
+    await user.type(screen.getByLabelText("Phone number"), "3055550123");
+    await user.click(screen.getByRole("button", { name: "Text me!" }));
+    await screen.findByText("that number doesn’t look right.");
+    await user.click(screen.getByRole("button", { name: "Text me!" }));
+    await screen.findByText("you’re in.");
+
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toMatchObject({ requestId: firstRequestId });
+    expect(JSON.parse(fetchMock.mock.calls[1][1].body)).toMatchObject({ requestId: secondRequestId });
   });
 });

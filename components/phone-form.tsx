@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { FormEvent, useRef, useState } from "react";
 import {
-  looksLikePhone,
+  normalizePhone,
   OnboardingError,
   submitOnboarding,
 } from "@/lib/onboarding";
@@ -29,24 +29,16 @@ function formatPhoneInput(value: string, previousValue: string) {
   }
 
   const hasInternationalPrefix = value.startsWith("+");
+  const isFormattedNorthAmerican =
+    value.startsWith("+1 (") || previousValue.startsWith("+1 (");
   const digits = value.replace(/\D/g, "");
 
   if (!digits) return hasInternationalPrefix ? "+" : "";
-  if (hasInternationalPrefix && !digits.startsWith("1")) {
+  if (hasInternationalPrefix && !isFormattedNorthAmerican) {
     return `+${digits.slice(0, 15)}`;
   }
 
   return formatNorthAmericanPhone(digits);
-}
-
-function normalizePhone(phone: string) {
-  const trimmed = phone.trim();
-  const digits = trimmed.replace(/\D/g, "");
-  if (trimmed.startsWith("+")) return `+${digits}`;
-
-  return digits.startsWith("1") && digits.length === 11
-    ? `+${digits}`
-    : `+1${digits}`;
 }
 
 const errorMessages: Record<OnboardingError["code"], string> = {
@@ -62,6 +54,7 @@ export function PhoneForm({ id }: { id: string }) {
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState("");
   const submissionInFlight = useRef(false);
+  const pendingRequestId = useRef<string | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,7 +63,7 @@ export function PhoneForm({ id }: { id: string }) {
 
     const submittedPhone = normalizePhone(phone);
 
-    if (!looksLikePhone(submittedPhone)) {
+    if (!submittedPhone) {
       setError("that number doesn’t look right.");
       return;
     }
@@ -80,10 +73,16 @@ export function PhoneForm({ id }: { id: string }) {
     setError("");
 
     try {
-      const result = await submitOnboarding(submittedPhone);
+      const requestId = pendingRequestId.current || crypto.randomUUID();
+      pendingRequestId.current = requestId;
+      const result = await submitOnboarding(submittedPhone, requestId);
+      pendingRequestId.current = null;
       setState(result.status);
       setPhone("");
     } catch (caught) {
+      if (caught instanceof OnboardingError && caught.definitive) {
+        pendingRequestId.current = null;
+      }
       setState("idle");
       setError(
         caught instanceof OnboardingError
