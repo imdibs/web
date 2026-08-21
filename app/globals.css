@@ -666,3 +666,132 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   .hero-transition-layer { filter: none; transform: none; transition: none; }
 }
+
+/* SEO product pages */
+.seo-page {
+  --seo-paper: #f7f4ee;
+  --seo-muted: #686661;
+  min-height: 100svh;
+  background: #fff;
+  color: #111;
+  font-family: var(--font-neue-montreal), Arial, sans-serif;
+}
+.seo-page a:focus-visible { border-radius: 3px; outline: 2px solid #111; outline-offset: 4px; }
+.seo-header {
+  display: grid;
+  width: min(calc(100% - 48px), 1240px);
+  min-height: 96px;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  align-items: center;
+  margin: 0 auto;
+}
+.seo-header__brand,
+.seo-header__brand img { display: block; width: 48px; height: 48px; border-radius: 50%; }
+.seo-header nav { display: flex; gap: 34px; color: #555; font-size: .88rem; }
+.seo-header nav a { text-decoration: none; }
+.seo-header nav a:hover { color: #111; }
+.seo-header__cta { justify-self: end; border-bottom: 1px solid #bbb; padding: 8px 0; font-size: .88rem; text-decoration: none; }
+.seo-header__cta span { margin-left: 8px; }
+.seo-hero {
+  display: grid;
+  width: min(calc(100% - 48px), 1240px);
+  min-height: min(720px, calc(100svh - 96px));
+  grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+  gap: clamp(48px, 8vw, 120px);
+  align-items: center;
+  margin: 0 auto;
+  padding: clamp(70px, 9vw, 130px) 0;
+}
+.seo-kicker { margin: 0 0 24px; color: #6d6b66; font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.seo-hero h1 { max-width: 800px; margin: 0; font-size: clamp(3.6rem, 7vw, 7rem); font-weight: 500; letter-spacing: -.065em; line-height: .91; text-wrap: balance; }
+.seo-hero__subheadline { max-width: 610px; margin: 34px 0 0; color: #565550; font-size: clamp(1.08rem, 1.8vw, 1.35rem); line-height: 1.55; }
+.seo-button { display: inline-flex; min-height: 54px; align-items: center; gap: 30px; margin-top: 36px; border-radius: 999px; background: #111; color: #fff; padding: 0 25px; font-size: .93rem; font-weight: 500; text-decoration: none; }
+.seo-button span { font-size: 1.15rem; }
+.seo-image { position: relative; width: 100%; overflow: hidden; border-radius: clamp(20px, 3vw, 36px); background: var(--seo-paper); }
+.seo-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.seo-hero .seo-image { height: clamp(440px, 55vw, 680px); }
+.seo-hero .seo-image--phone img,
+.seo-hero .seo-image--iphone img { width: auto; max-width: 82%; height: 110%; margin: 10% auto 0; object-fit: contain; object-position: top center; }
+.seo-hero .seo-image--miami { display: grid; place-items: center; }
+.seo-hero .seo-image--miami img { width: 80%; height: auto; object-fit: contain; mix-blend-mode: multiply; }
+.seo-intro { width: min(calc(100% - 48px), 1100px); margin: clamp(80px, 12vw, 170px) auto; }
+.seo-intro p { max-width: 1000px; margin: 0; font-size: clamp(2rem, 4.7vw, 4.65rem); font-weight: 500; letter-spacing: -.055em; line-height: 1.05; text-wrap: balance; }
+.seo-intro--comparison span { display: block; margin-top: 28px; color: #777; font-size: .78rem; }
+.seo-supporting-visual { width: min(calc(100% - 48px), 1240px); margin: 0 auto clamp(100px, 14vw, 190px); }
+.seo-supporting-visual .seo-image { height: min(70vw, 720px); }
+.seo-supporting-visual .seo-image--phone img,
+.seo-supporting-visual .seo-image--iphone img { width: auto; max-width: 60%; height: 115%; margin: 5% auto 0; object-fit: contain; object-position: top center; }
+.seo-supporting-visual--end { margin-top: clamp(80px, 12vw, 150px); }
+.seo-sections { width: min(calc(100% - 48px), 1100px); margin: 0 auto clamp(120px, 16vw, 220px); border-top: 1px solid #d8d6d1; }
+.seo-content-section { display: grid; grid-template-columns: 90px 1fr; gap: 24px; border-bottom: 1px solid #d8d6d1; padding: clamp(54px, 7vw, 90px) 0; }
+.seo-section-number { margin: 8px 0 0; color: #999791; font-size: .72rem; letter-spacing: .12em; }
+.seo-content-section > div { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(280px, 1fr); gap: clamp(40px, 8vw, 120px); }
+.seo-content-section h2 { margin: 0; font-size: clamp(1.75rem, 3.4vw, 3.1rem); font-weight: 500; letter-spacing: -.045em; line-height: 1.03; }
+.seo-content-section p { margin: 3px 0 0; color: #55544f; font-size: 1.06rem; line-height: 1.65; }
+.seo-content-section ul { grid-column: 2; display: grid; gap: 12px; margin: 22px 0 0; padding: 0; color: #333; list-style: none; }
+.seo-content-section li { position: relative; border-top: 1px solid #e1dfda; padding: 13px 0 0 23px; line-height: 1.45; }
+.seo-content-section li::before { position: absolute; left: 1px; content: "—"; color: #999; }
+.seo-faq { width: min(calc(100% - 48px), 900px); margin: 0 auto clamp(120px, 16vw, 220px); }
+.seo-faq > h2,
+.seo-related > h2 { margin: 0 0 54px; font-size: clamp(2.5rem, 5.5vw, 5rem); font-weight: 500; letter-spacing: -.06em; line-height: .98; }
+.seo-faq__list { border-top: 1px solid #cccac5; }
+.seo-faq details { border-bottom: 1px solid #cccac5; }
+.seo-faq summary { display: flex; min-height: 78px; align-items: center; justify-content: space-between; gap: 24px; cursor: pointer; font-size: 1.08rem; list-style: none; }
+.seo-faq summary::-webkit-details-marker { display: none; }
+.seo-faq summary span { color: #888; font-size: 1.4rem; font-weight: 400; }
+.seo-faq details[open] summary span { transform: rotate(45deg); }
+.seo-faq details p { max-width: 670px; margin: -4px 0 32px; color: #5b5955; line-height: 1.65; }
+.seo-related { width: min(calc(100% - 48px), 1100px); margin: 0 auto clamp(120px, 16vw, 210px); }
+.seo-related__links { border-top: 1px solid #cccac5; }
+.seo-related__links a { position: relative; display: grid; grid-template-columns: .8fr 1fr 30px; gap: 30px; align-items: center; border-bottom: 1px solid #cccac5; padding: 29px 0; text-decoration: none; }
+.seo-related__links span { font-size: 1.15rem; }
+.seo-related__links small { color: #77746f; font-size: .9rem; }
+.seo-related__links b { justify-self: end; font-size: 1.15rem; font-weight: 400; transition: transform 160ms ease; }
+.seo-related__links a:hover b { transform: translate(3px, -3px); }
+.seo-final-cta { display: grid; min-height: 650px; place-content: center; background: #111; color: #fff; padding: 90px 24px; text-align: center; }
+.seo-final-cta .seo-kicker { color: #aaa; }
+.seo-final-cta h2 { max-width: 900px; margin: 0; font-size: clamp(3rem, 7.4vw, 7rem); font-weight: 500; letter-spacing: -.065em; line-height: .94; text-wrap: balance; }
+.seo-final-cta > p:not(.seo-kicker) { margin: 26px 0 0; color: #aaa; font-size: 1.05rem; }
+.seo-button--light { justify-self: center; background: #fff; color: #111; }
+.seo-page .site-footer--legal-page { background: #111; color: #888; }
+
+@media (max-width: 820px) {
+  .seo-header { min-height: 80px; grid-template-columns: 1fr auto; }
+  .seo-header nav { display: none; }
+  .seo-header__brand,
+  .seo-header__brand img { width: 42px; height: 42px; }
+  .seo-hero { min-height: auto; grid-template-columns: 1fr; gap: 62px; padding: 70px 0 90px; }
+  .seo-hero h1 { font-size: clamp(3.25rem, 13vw, 5.5rem); }
+  .seo-hero .seo-image { height: min(112vw, 620px); }
+  .seo-content-section > div { display: block; }
+  .seo-content-section h2 { margin-bottom: 25px; }
+  .seo-content-section ul { margin-top: 28px; }
+}
+
+@media (max-width: 520px) {
+  .seo-header,
+  .seo-hero,
+  .seo-intro,
+  .seo-supporting-visual,
+  .seo-sections,
+  .seo-faq,
+  .seo-related { width: calc(100% - 40px); }
+  .seo-header__cta { font-size: .82rem; }
+  .seo-hero { gap: 48px; padding-top: 56px; }
+  .seo-hero h1 { font-size: clamp(3rem, 15.7vw, 4.8rem); }
+  .seo-hero__subheadline { margin-top: 27px; font-size: 1.03rem; }
+  .seo-button { min-height: 50px; margin-top: 28px; padding: 0 21px; }
+  .seo-intro { margin-top: 96px; margin-bottom: 100px; }
+  .seo-intro p { font-size: clamp(1.9rem, 9.3vw, 2.8rem); }
+  .seo-content-section { grid-template-columns: 38px 1fr; gap: 10px; padding: 51px 0; }
+  .seo-content-section h2 { font-size: 1.9rem; }
+  .seo-content-section p { font-size: .99rem; }
+  .seo-faq > h2,
+  .seo-related > h2 { margin-bottom: 40px; font-size: 2.8rem; }
+  .seo-faq summary { min-height: 72px; font-size: 1rem; }
+  .seo-related__links a { grid-template-columns: 1fr 24px; gap: 9px; }
+  .seo-related__links small { grid-column: 1; }
+  .seo-related__links b { grid-row: 1 / span 2; grid-column: 2; }
+  .seo-final-cta { min-height: 560px; }
+}

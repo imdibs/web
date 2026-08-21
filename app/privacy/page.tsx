@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { LegalHeader } from "@/components/legal-header";
 import { SiteFooter } from "@/components/site-footer";
+import { createPublicMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy — Dibs",
-  description: "How Dibs collects, uses, and protects information in the Dibs alpha.",
-};
+export const metadata: Metadata = createPublicMetadata(
+  "Privacy Policy — Dibs",
+  "How Dibs collects, uses, and protects information in the Dibs alpha.",
+  "/privacy",
+);
 
 const sections = [
   ["information-we-collect", "Information We Collect"],

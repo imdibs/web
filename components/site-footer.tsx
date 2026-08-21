@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function SiteFooter({ currentPage }: { currentPage?: "privacy" | "terms" | "company" }) {
+export function SiteFooter({ currentPage }: { currentPage?: "privacy" | "terms" | "company" | "seo" }) {
   return (
     <footer className={`site-footer${currentPage ? " site-footer--legal-page" : ""}`}>
       <nav aria-label="Legal">

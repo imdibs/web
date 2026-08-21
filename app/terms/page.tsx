@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalHeader } from "@/components/legal-header";
 import { SiteFooter } from "@/components/site-footer";
+import { createPublicMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Terms of Service — Dibs",
-  description: "The terms that govern access to and use of the Dibs alpha.",
-};
+export const metadata: Metadata = createPublicMetadata(
+  "Terms of Service — Dibs",
+  "The terms that govern access to and use of the Dibs alpha.",
+  "/terms",
+);
 
 const sections = [
   ["accepting-these-terms", "Accepting These Terms"],

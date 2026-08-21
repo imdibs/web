@@ -2,6 +2,13 @@ import Image from "next/image";
 import { HeroShowcase } from "@/components/hero-showcase";
 import { HomeHeader } from "@/components/home-header";
 import { SiteFooter } from "@/components/site-footer";
+import { createPublicMetadata } from "@/lib/seo/metadata";
+
+export const metadata = createPublicMetadata(
+  "Dibs: AI to Buy and Sell Anything",
+  "Buy and sell through Dibs, the AI-native marketplace you can text.",
+  "/",
+);
 
 export default function Home() {
   return (

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import { createWebsiteSchema } from "@/lib/seo/schema";
+import { SITE_URL } from "@/lib/seo/metadata";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -17,14 +19,21 @@ const neueMontreal = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Dibs: AI to buy/sell anything",
-  description: "Your personal AI for everyday life, available right in iMessage.",
+  metadataBase: new URL(SITE_URL),
+  title: "Dibs: AI to Buy and Sell Anything",
+  description: "Buy and sell through Dibs, the AI-native marketplace you can text.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${neueMontreal.variable}`}>{children}</body>
+      <body className={`${poppins.variable} ${neueMontreal.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(createWebsiteSchema()).replace(/</g, "\\u003c") }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
