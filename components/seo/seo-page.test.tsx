@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { publishedSEOPageRegistry } from "@/lib/seo/registry";
 import { SEOPage } from "./seo-page";
@@ -11,7 +11,8 @@ describe("SEOPage", () => {
     render(<SEOPage page={page} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(page.headline);
     expect(screen.getByText("Battery health and carrier lock status")).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /Sell a MacBook/ })).toHaveLength(1);
+    const relatedPages = screen.getByRole("complementary", { name: "The next useful page." });
+    expect(within(relatedPages).getAllByRole("link", { name: /Sell a MacBook/ })).toHaveLength(1);
     expect(document.querySelectorAll('script[type="application/ld+json"]')).toHaveLength(3);
   });
 

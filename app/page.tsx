@@ -26,7 +26,7 @@ export default function Home() {
       />
 
       <HeroShowcase />
-      <SiteFooter />
+      <SiteFooter compact />
     </main>
   );
 }

@@ -74,28 +74,30 @@ function PageShell({ page, children }: { page: SEOPageConfig; children: React.Re
       ))}
       <SEOHeader />
       <main>
-        <section className="seo-hero">
-          <div className="seo-hero__copy">
-            <p className="seo-kicker">{page.eyebrow}</p>
-            <h1>{page.headline}</h1>
-            <p className="seo-hero__subheadline">{page.subheadline}</p>
+        <div className="seo-article">
+          <section className="seo-hero">
+            <div className="seo-hero__copy">
+              <p className="seo-kicker">{page.eyebrow}</p>
+              <h1>{page.headline}</h1>
+              <p className="seo-hero__subheadline">{page.subheadline}</p>
+              <SEOTrackedCTA className="seo-button" href={page.cta.href} {...eventContext}>
+                {page.cta.label} <span aria-hidden="true">→</span>
+              </SEOTrackedCTA>
+            </div>
+            <SEOImage imageKey={page.image.hero} priority />
+          </section>
+          {children}
+          <FAQ page={page} />
+          <RelatedPages page={page} />
+          <section className="seo-final-cta">
+            <p className="seo-kicker">Buy and sell through Dibs</p>
+            <h2>{page.cta.heading}</h2>
+            <p>{page.cta.body}</p>
             <SEOTrackedCTA className="seo-button" href={page.cta.href} {...eventContext}>
               {page.cta.label} <span aria-hidden="true">→</span>
             </SEOTrackedCTA>
-          </div>
-          <SEOImage imageKey={page.image.hero} priority />
-        </section>
-        {children}
-        <FAQ page={page} />
-        <RelatedPages page={page} />
-        <section className="seo-final-cta">
-          <p className="seo-kicker">Buy and sell through Dibs</p>
-          <h2>{page.cta.heading}</h2>
-          <p>{page.cta.body}</p>
-          <SEOTrackedCTA className="seo-button seo-button--light" href={page.cta.href} {...eventContext}>
-            {page.cta.label} <span aria-hidden="true">→</span>
-          </SEOTrackedCTA>
-        </section>
+          </section>
+        </div>
       </main>
       <SiteFooter currentPage="seo" />
     </div>
@@ -116,8 +118,8 @@ export function SellTemplate({ page }: { page: SEOPageConfig }) {
   return (
     <PageShell page={page}>
       <section className="seo-intro"><p>{page.intro}</p></section>
-      <div className="seo-sections seo-sections--sell">{page.sections.map((section, index) => <Section section={section} number={index + 1} key={section.title} />)}</div>
-      {page.image.supporting && <section className="seo-supporting-visual seo-supporting-visual--end"><SEOImage imageKey={page.image.supporting} /></section>}
+      {page.image.supporting && <section className="seo-supporting-visual"><SEOImage imageKey={page.image.supporting} /></section>}
+      <div className="seo-sections">{page.sections.map((section, index) => <Section section={section} number={index + 1} key={section.title} />)}</div>
     </PageShell>
   );
 }
@@ -135,8 +137,8 @@ export function LocationTemplate({ page }: { page: SEOPageConfig }) {
   return (
     <PageShell page={page}>
       <section className="seo-intro"><p>{page.intro}</p></section>
+      {page.image.supporting && <section className="seo-supporting-visual"><SEOImage imageKey={page.image.supporting} /></section>}
       <div className="seo-sections">{page.sections.map((section, index) => <Section section={section} number={index + 1} key={section.title} />)}</div>
-      {page.image.supporting && <section className="seo-supporting-visual seo-supporting-visual--end"><SEOImage imageKey={page.image.supporting} /></section>}
     </PageShell>
   );
 }
