@@ -350,7 +350,7 @@ a { color: inherit; }
 }
 .phone-input::placeholder { color: #777; opacity: 1; }
 .phone-input:focus { border-bottom-color: #999; }
-.phone-form__action { display: grid; flex: 0 0 auto; justify-items: center; gap: 5px; }
+.phone-form__action { display: grid; flex: 0 0 auto; justify-items: center; gap: 10px; }
 .phone-form__submit {
   display: inline-flex;
   min-width: max-content;
@@ -392,9 +392,8 @@ a { color: inherit; }
 }
 .phone-form__submit:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .phone-form__submit:disabled { cursor: wait; opacity: .55; }
-.phone-form__fee { color: #888; font-family: var(--font-neue-montreal), Arial, "Helvetica Neue", sans-serif; font-size: .68rem; font-weight: 500; line-height: 1; }
+.phone-form__fee,
 .phone-form__hint {
-  margin: 8px 0 0;
   color: #888;
   font-family: var(--font-neue-montreal), Arial, "Helvetica Neue", sans-serif;
   font-size: .8rem;
@@ -403,6 +402,7 @@ a { color: inherit; }
   text-align: center;
   word-spacing: .12em;
 }
+.phone-form__hint { margin: 8px 0 0; }
 .phone-form__hint-action { font-weight: 700; }
 .phone-form__hint-action--buy { color: #2eaf67; }
 .phone-form__hint-action--sell { color: #e53935; }
@@ -505,17 +505,28 @@ a { color: inherit; }
   }
   .hero-heading__prefix { margin-bottom: 3px; }
   .phone-form { width: min(calc(100% - 40px), 360px); margin-top: 17px; padding-bottom: 18px; }
-  .form-row { position: relative; gap: 9px; }
+  .form-row { position: relative; min-height: 38px; gap: 9px; }
   .phone-form__icon { width: 38px; height: 38px; flex-basis: 38px; }
   .phone-input { min-height: 38px; font-size: .82rem; }
+  .phone-form__action { position: relative; }
   .phone-form__submit { min-height: 38px; padding: 0 15px; font-size: .82rem; }
+  .phone-form__fee,
+  .phone-form__hint {
+    font-size: .66rem;
+  }
+  .phone-form__fee {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
   .phone-form__hint {
     position: absolute;
     top: 100%;
     right: 0;
     left: 0;
     margin-top: 6px;
-    font-size: .66rem;
     text-align: center;
     white-space: nowrap;
   }
@@ -524,10 +535,11 @@ a { color: inherit; }
 
 @media (max-width: 380px) {
   .site-footer { font-size: .68rem; }
-  .form-row { gap: 7px; }
+  .form-row { min-height: 36px; gap: 7px; }
   .phone-form__icon { width: 34px; height: 34px; flex-basis: 34px; margin-top: 2px; }
   .phone-input { min-height: 36px; font-size: .76rem; }
   .phone-form__submit { min-height: 36px; padding-inline: 12px; font-size: .78rem; }
+  .phone-form__fee,
   .phone-form__hint { font-size: .64rem; }
 }
 
