@@ -19,10 +19,8 @@ describe("CompanyPage", () => {
     expect(within(primaryNavigation).getByRole("link", { name: "Company" })).toHaveAttribute("href", "/company");
     expect(within(primaryNavigation).getByRole("link", { name: "Company" })).toHaveAttribute("aria-current", "page");
 
-    const footerNavigation = screen.getByRole("navigation", { name: "Explore Dibs" });
-    const legalGroup = within(footerNavigation).getByRole("heading", { name: "Legal" }).parentElement;
-
-    expect(within(legalGroup as HTMLElement).getByRole("link", { name: "Company" })).toHaveAttribute(
+    const footerNavigation = screen.getByRole("navigation", { name: "Legal" });
+    expect(within(footerNavigation).getByRole("link", { name: "Company" })).toHaveAttribute(
       "aria-current",
       "page",
     );

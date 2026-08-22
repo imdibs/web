@@ -99,7 +99,7 @@ function PageShell({ page, children }: { page: SEOPageConfig; children: React.Re
           </section>
         </div>
       </main>
-      <SiteFooter currentPage="seo" currentPath={page.path} />
+      <SiteFooter />
     </div>
   );
 }

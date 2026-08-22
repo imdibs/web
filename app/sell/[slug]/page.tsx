@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SEOPage } from "@/components/seo/seo-page";
+import { areSEOPreviewPagesEnabled } from "@/lib/seo/availability";
 import { createSEOMetadata } from "@/lib/seo/metadata";
 import { getSellSEOPage, publishedSEOPageRegistry } from "@/lib/seo/registry";
-
-export const dynamicParams = false;
 
 interface SellSEOPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
+  if (!areSEOPreviewPagesEnabled()) return [];
+
   return publishedSEOPageRegistry
     .filter(page => page.type === "sell")
     .map(page => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({ params }: SellSEOPageProps): Promise<Metadata> {
+  if (!areSEOPreviewPagesEnabled()) return {};
+
   const { slug } = await params;
   const page = getSellSEOPage(slug);
   if (!page) return {};
@@ -24,6 +27,8 @@ export async function generateMetadata({ params }: SellSEOPageProps): Promise<Me
 }
 
 export default async function SellSEOPage({ params }: SellSEOPageProps) {
+  if (!areSEOPreviewPagesEnabled()) notFound();
+
   const { slug } = await params;
   const page = getSellSEOPage(slug);
   if (!page) notFound();
