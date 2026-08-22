@@ -150,17 +150,20 @@ export function PhoneForm({ id }: { id: string }) {
             anything by texting dibs
           </p>
         </div>
-        <button
-          className="phone-form__submit"
-          type="submit"
-          disabled={state === "submitting"}
-          aria-label={state === "submitting" ? "Sending" : "Text me!"}
-        >
-          <span>{state === "submitting" ? "Sending" : "Text me!"}</span>
-          {state !== "submitting" && (
-            <span className="phone-form__submit-arrow" aria-hidden="true">→</span>
-          )}
-        </button>
+        <div className="phone-form__action">
+          <button
+            className="phone-form__submit"
+            type="submit"
+            disabled={state === "submitting"}
+            aria-label={state === "submitting" ? "Sending" : "Text me!"}
+          >
+            <span>{state === "submitting" ? "Sending" : "Text me!"}</span>
+            {state !== "submitting" && (
+              <span className="phone-form__submit-arrow" aria-hidden="true">→</span>
+            )}
+          </button>
+          <span className="phone-form__fee">0% fee</span>
+        </div>
       </div>
       {error && (
         <p className="form-message" id={`${id}-message`} aria-live="polite">

@@ -30,6 +30,7 @@ describe("PhoneForm", () => {
     expect(screen.getByLabelText("Phone number")).toHaveAttribute("aria-describedby", "test-phone-hint");
     expect(screen.getByLabelText("Phone number")).toHaveAttribute("placeholder", "+1 (555) 000-0000");
     expect(screen.getByRole("button", { name: "Text me!" })).toHaveTextContent("Text me!");
+    expect(screen.getByText("0% fee")).toHaveClass("phone-form__fee");
   });
 
   it.each([

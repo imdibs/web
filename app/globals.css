@@ -350,6 +350,7 @@ a { color: inherit; }
 }
 .phone-input::placeholder { color: #777; opacity: 1; }
 .phone-input:focus { border-bottom-color: #999; }
+.phone-form__action { display: grid; flex: 0 0 auto; justify-items: center; gap: 5px; }
 .phone-form__submit {
   display: inline-flex;
   min-width: max-content;
@@ -391,6 +392,7 @@ a { color: inherit; }
 }
 .phone-form__submit:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .phone-form__submit:disabled { cursor: wait; opacity: .55; }
+.phone-form__fee { color: #888; font-family: var(--font-neue-montreal), Arial, "Helvetica Neue", sans-serif; font-size: .68rem; font-weight: 500; line-height: 1; }
 .phone-form__hint {
   margin: 8px 0 0;
   color: #888;
