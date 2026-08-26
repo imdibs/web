@@ -432,6 +432,7 @@ a { color: inherit; }
   .home-header__logo { width: 56px; height: 56px; }
   .home-location-badge { top: 15px; right: 18px; width: 82px; }
   .phone-showcase {
+    --mobile-showcase-lift: 16px;
     position: absolute;
     inset: 0;
     width: 100vw;
@@ -446,7 +447,7 @@ a { color: inherit; }
     left: 50%;
     width: min(82vw, 335px);
     aspect-ratio: 24 / 23;
-    transform: translateX(-50%) scale(.96);
+    transform: translate(-50%, calc(-1 * var(--mobile-showcase-lift))) scale(.96);
   }
   .featured-popup-stack { top: -7%; left: -1%; width: 47%; }
   .featured-popup-stack--user-upload { top: -8%; right: -4%; left: auto; width: 47%; }
@@ -494,7 +495,7 @@ a { color: inherit; }
     top: auto;
     bottom: max(54px, calc(env(safe-area-inset-bottom) + 44px));
     width: calc(100vw - 32px);
-    transform: translateX(-50%);
+    transform: translate(-50%, calc(-1 * var(--mobile-showcase-lift)));
   }
   .hero-heading {
     display: flex;
