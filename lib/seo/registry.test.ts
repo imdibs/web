@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { seoImages } from "./images";
 import { getRootSEOPage, getSellSEOPage, publishedSEOPageRegistry } from "./registry";
 
 describe("SEO page registry", () => {
@@ -15,6 +16,20 @@ describe("SEO page registry", () => {
     expect(getRootSEOPage("what-is-dibs")?.path).toBe("/what-is-dibs");
     expect(getSellSEOPage("iphone")?.path).toBe("/sell/iphone");
     expect(getRootSEOPage("iphone")).toBeUndefined();
+  });
+
+  it("uses the NYC and SF live image for the New York marketplace", () => {
+    const newYork = publishedSEOPageRegistry.find(page => page.path === "/new-york-marketplace");
+    const miami = publishedSEOPageRegistry.find(page => page.path === "/miami-marketplace");
+
+    expect(newYork?.image.hero).toBe("nycsf");
+    expect(miami?.image.hero).toBe("marketplace");
+    expect(seoImages.nycsf).toMatchObject({
+      src: "/branding/nycsf-live.png",
+      alt: "San Francisco and New York City — Live on Dibs",
+      width: 1774,
+      height: 887,
+    });
   });
 
   it("keeps every page complete and contextually linked", () => {

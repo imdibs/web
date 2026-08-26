@@ -17,8 +17,8 @@ export default function Home() {
 
       <Image
         className="home-location-badge"
-        src="/branding/miami-live.png"
-        alt="Miami, Florida — Live"
+        src="/branding/nycsf-live.png"
+        alt="San Francisco and New York City — Live"
         width={1774}
         height={887}
         unoptimized

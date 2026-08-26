@@ -9,7 +9,7 @@ export type SEOImageKey =
   | "furniture"
   | "iphone"
   | "marketplace"
-  | "miami";
+  | "nycsf";
 
 export interface SEOSection {
   title: string;

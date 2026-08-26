@@ -57,9 +57,9 @@ export const seoImages: Record<SEOImageKey, SEOImageConfig> = {
     width: 900,
     height: 900,
   },
-  miami: {
-    src: "/branding/miami-live.png",
-    alt: "Miami, Florida — Live on Dibs",
+  nycsf: {
+    src: "/branding/nycsf-live.png",
+    alt: "San Francisco and New York City — Live on Dibs",
     width: 1774,
     height: 887,
   },

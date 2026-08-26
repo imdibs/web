@@ -178,7 +178,7 @@ const alternativePages = [
 const location = (slug: string, city: string, context: string, categories: string[]): SEOPageConfig => ({
   slug: `${slug}-marketplace`, path: `/${slug}-marketplace`, type: "location", published: true, location: slug,
   title: `${city} Marketplace: Buy and Sell with Dibs`, description: `Buy and sell locally in ${city} through Dibs. Text what you need, get help with listings and discovery, and connect with people nearby.`,
-  eyebrow: `${city} marketplace`, headline: `Buy and sell locally in ${city}.`, subheadline: "Text Dibs instead of working through the usual marketplace steps. Describe the item, your budget, and the part of town that works for you.", image: { hero: slug === "miami" ? "miami" : "marketplace", supporting: "phone" },
+  eyebrow: `${city} marketplace`, headline: `Buy and sell locally in ${city}.`, subheadline: "Text Dibs instead of working through the usual marketplace steps. Describe the item, your budget, and the part of town that works for you.", image: { hero: slug === "new-york" ? "nycsf" : "marketplace", supporting: "phone" },
   intro: `${context} Local marketplace transactions still depend on clear item details, realistic travel expectations, and a handoff both people are comfortable with.`,
   sections: [
     { title: `Buying locally in ${city}`, body: "Include your preferred area, travel radius, timing, budget, and must-have details. Dibs can use that context to help focus discovery." },
