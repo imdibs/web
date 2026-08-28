@@ -52,8 +52,7 @@ describe("HeroShowcase", () => {
     const jordanCard = screen.getByTestId("hero-card-jordans");
     const jordanImage = jordanCard.querySelector('[aria-label="Image sent by user"]');
     expect(jordanImage).toBeInTheDocument();
-    expect(screen.getAllByText("Miami, FL")).toHaveLength(2);
-    expect(jordanCard).toHaveTextContent("Miami, FL");
+    expect(jordanCard).toHaveTextContent("Williamsburg, NYC");
     expect(jordanCard).toHaveTextContent("1.1");
     expect(screen.getByText(/These Jordans are in demand nearby/)).toBeInTheDocument();
     expect(screen.getByText(/selling for around \$100/)).toBeInTheDocument();
@@ -83,7 +82,7 @@ describe("HeroShowcase", () => {
         imageAlt: "Concert tickets in front of a live concert stage",
         width: 900,
         height: 900,
-        location: "Downtown",
+        location: "SoMa, SF",
         rating: "2.4 mi",
         message: "Gary is selling them for $85 each. Pretty good seats too.",
         mobileMessage: "Gary has them for $85 each.",
@@ -97,7 +96,7 @@ describe("HeroShowcase", () => {
         imageAlt: "Open MacBook laptop",
         width: 720,
         height: 960,
-        location: "Brickell, Miami",
+        location: "SoHo, NYC",
         rating: "3.2 mi",
         message: "Found one for $650. M1, barely used.",
         mobileMessage: "M1 MacBook, $650. Barely used.",
@@ -111,7 +110,7 @@ describe("HeroShowcase", () => {
         imageAlt: "Camera being offered for sale",
         width: 720,
         height: 960,
-        location: "Miami Beach",
+        location: "Hayes Valley, SF",
         rating: "2.1 mi",
         userUpload: true,
         message: "I’d say around $700. I found 8 buyers near you looking for cameras like this. I’d list it and see what happens.",
@@ -127,7 +126,7 @@ describe("HeroShowcase", () => {
         imageAlt: "Blue Trek bicycle",
         width: 720,
         height: 960,
-        location: "Coral Gables",
+        location: "Astoria, NYC",
         rating: "1.8 mi",
         message: "Found a Trek for $420. Looks barely used.",
         mobileMessage: "Trek for $420. Barely used.",
@@ -136,6 +135,22 @@ describe("HeroShowcase", () => {
         replyLines: ["lowk needed it!", "tho offer $350 for it"],
       },
     ]);
+  });
+
+  it("uses a different SF or NYC area for every marketplace image", () => {
+    const locations = heroScenarios.map(({ location }) => location);
+
+    expect(locations).toEqual([
+      "Mission District, SF",
+      "Williamsburg, NYC",
+      "SoMa, SF",
+      "SoHo, NYC",
+      "Hayes Valley, SF",
+      "Astoria, NYC",
+    ]);
+    expect(new Set(locations).size).toBe(heroScenarios.length);
+    expect(locations.filter((location) => location.endsWith(", SF"))).toHaveLength(3);
+    expect(locations.filter((location) => location.endsWith(", NYC"))).toHaveLength(3);
   });
 
   it("places the ticket result above the new connection reply", () => {
