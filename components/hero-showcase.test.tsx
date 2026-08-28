@@ -52,7 +52,7 @@ describe("HeroShowcase", () => {
     const jordanCard = screen.getByTestId("hero-card-jordans");
     const jordanImage = jordanCard.querySelector('[aria-label="Image sent by user"]');
     expect(jordanImage).toBeInTheDocument();
-    expect(jordanCard).toHaveTextContent("Williamsburg, NYC");
+    expect(jordanCard).toHaveTextContent("Chelsea, NYC");
     expect(jordanCard).toHaveTextContent("1.1");
     expect(screen.getByText(/These Jordans are in demand nearby/)).toBeInTheDocument();
     expect(screen.getByText(/selling for around \$100/)).toBeInTheDocument();
@@ -141,8 +141,8 @@ describe("HeroShowcase", () => {
     const locations = heroScenarios.map(({ location }) => location);
 
     expect(locations).toEqual([
-      "Mission District, SF",
-      "Williamsburg, NYC",
+      "Sunset, SF",
+      "Chelsea, NYC",
       "SoMa, SF",
       "SoHo, NYC",
       "Hayes Valley, SF",
